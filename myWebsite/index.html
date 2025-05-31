@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Car Controller</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10V6c0-2-2-4-4-4H4c-2 0-4 2-4 4v10c0 .6.4 1 1 1h2"/>
+                    <circle cx="7" cy="17" r="2"/>
+                    <path d="M9 17h6"/>
+                    <circle cx="17" cy="17" r="2"/>
+                </svg>
+                <span>RC Controller</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="connect">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6.5 6.5h11"/>
+                        <path d="M6.5 17.5h11"/>
+                        <path d="M6.5 12h11"/>
+                    </svg>
+                    Connect
+                </button>
+                <button class="nav-btn" data-page="control">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="6" x2="10" y1="12" y2="12"/>
+                        <line x1="8" x2="8" y1="10" y2="14"/>
+                        <line x1="15" x2="15.01" y1="13" y2="13"/>
+                        <line x1="18" x2="18.01" y1="11" y2="11"/>
+                        <rect width="20" height="12" x="2" y="6" rx="2"/>
+                    </svg>
+                    Control
+                </button>
+                <button class="nav-btn" data-page="help">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <path d="M12 17h.01"/>
+                    </svg>
+                    Help
+                </button>
+                <button class="nav-btn" data-page="settings">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    Settings
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Connect Page -->
+            <div id="connect-page" class="page active">
+                <div class="container">
+                    <header class="page-header">
+                        <h1>Device Connection</h1>
+                        <p>Connect to your RC car via Bluetooth or WiFi</p>
+                    </header>
+
+                    <div class="connection-grid">
+                        <!-- Bluetooth Connection -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6.5 6.5h11"/>
+                                    <path d="M6.5 17.5h11"/>
+                                    <path d="M6.5 12h11"/>
+                                </svg>
+                                Bluetooth Connection
+                            </h3>
+                            
+                            <button id="connectBtn" class="btn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6.5 6.5h11"/>
+                                    <path d="M6.5 17.5h11"/>
+                                    <path d="M6.5 12h11"/>
+                                </svg>
+                                Connect to Device
+                            </button>
+
+                            <div class="connection-info">
+                                <div id="connectionDetails">
+                                    <strong>Status:</strong> <span id="detailedStatus">Ready to connect</span><br>
+                                    <strong>Device:</strong> <span id="detailedDevice">None</span>
+                                </div>
+                            </div>
+
+                            <div class="device-list">
+                                <strong>Supported:</strong> HC-05, HC-06, ESP32, DX-BT24
+                            </div>
+
+                            <!-- Previous Devices -->
+                            <div id="previousDevices" class="previous-devices" style="display: none;">
+                                <h4>Previous Devices</h4>
+                                <div id="deviceHistory" class="device-history"></div>
+                            </div>
+
+                            <div id="compatibilityAlert" class="compatibility-alert" style="display: none;">
+                                ⚠️ <span id="compatibilityMessage">Web Bluetooth not supported in this browser. Please use Chrome, Edge, or Opera.</span>
+                            </div>
+
+                            <div id="iosAlert" class="ios-alert" style="display: none;">
+                                📱 <strong>iOS/iPadOS Notice:</strong> Apple devices don't support Web Bluetooth. Please use WiFi connection instead or try the <a href="#" id="iosAppLink">dedicated iOS app</a>.
+                            </div>
+                        </div>
+
+                        <!-- WiFi Connection -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                                    <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                                    <path d="M12 20h.01"/>
+                                </svg>
+                                WiFi Connection
+                            </h3>
+                            
+                            <div class="wifi-form">
+                                <div class="form-group">
+                                    <label for="wifiIP">Device IP Address</label>
+                                    <input type="text" id="wifiIP" placeholder="192.168.1.100" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="wifiPort">Port</label>
+                                    <input type="number" id="wifiPort" placeholder="80" value="80" class="form-input">
+                                </div>
+                                <button id="wifiConnectBtn" class="btn">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                                        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                                        <path d="M12 20h.01"/>
+                                    </svg>
+                                    Connect via WiFi
+                                </button>
+                            </div>
+
+                            <div class="connection-info">
+                                <div id="wifiConnectionDetails">
+                                    <strong>Status:</strong> <span id="wifiStatus">Not connected</span><br>
+                                    <strong>Endpoint:</strong> <span id="wifiEndpoint">None</span>
+                                </div>
+                            </div>
+
+                            <div class="device-list">
+                                <strong>Compatible:</strong> ESP32, Arduino with WiFi module
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Page -->
+            <div id="control-page" class="page">
+                <div class="container">
+                    <header class="page-header">
+                        <h1>Vehicle Control</h1>
+                        <p>Control your RC car with dual joysticks and real-time feedback</p>
+                    </header>
+
+                    <!-- Status Banner -->
+                    <div class="status-banner">
+                        <div class="status-item">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span id="deviceStatus">Disconnected</span>
+                        </div>
+                        <div class="status-item">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                <path d="M6 8h.01"/>
+                                <path d="M10 8h.01"/>
+                                <path d="M14 8h.01"/>
+                            </svg>
+                            <span id="connectedDeviceName">No device</span>
+                        </div>
+                        <div class="status-item">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                            </svg>
+                            <span id="lastCommandSent">Last: None</span>
+                        </div>
+                    </div>
+
+                    <div class="control-layout">
+    <!-- Row 1: Combined Controls Container -->
+    <div class="combined-controls-container">
+        <div class="card controls-unified-card">
+            <h3 class="card-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                    <path d="M6 8h.01"/>
+                    <path d="M10 8h.01"/>
+                    <path d="M14 8h.01"/>
+                </svg>
+                Vehicle Controls
+            </h3>
+
+            <div class="unified-controls-layout">
+                <!-- Primary Control (WASD) -->
+                <div class="control-section primary-control">
+                    <h4 class="control-subtitle">Primary Control (WASD)</h4>
+                    <div class="dpad-container">
+                        <button class="dpad-btn dpad-up" data-command="F" data-joystick="wasd" title="Forward (W)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 15l-6-6-6 6"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-left" data-command="L" data-joystick="wasd" title="Left (A)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-stop" data-command="S" data-joystick="wasd" title="Stop (S)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="6" height="6" x="9" y="9"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-right" data-command="R" data-joystick="wasd" title="Right (D)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-down" data-command="B" data-joystick="wasd" title="Backward (S)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Speed Control (Center) -->
+                <div class="control-section speed-control-section">
+                    <h4 class="control-subtitle">Speed Control</h4>
+                    <div class="speed-controls">
+                        <div class="speed-display">
+                            <span id="currentSpeed">5</span><span class="speed-unit">/10</span>
+                        </div>
+                        <div class="speed-buttons">
+                            <button class="speed-btn speed-decrease" id="speedDown" title="Decrease Speed (-)">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14"/>
+                                </svg>
+                            </button>
+                            <div class="speed-bar">
+                                <div class="speed-fill" id="speedFill"></div>
+                            </div>
+                            <button class="speed-btn speed-increase" id="speedUp" title="Increase Speed (+)">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14"/>
+                                    <path d="M5 12h14"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servo Control (Arrows) -->
+                <div class="control-section servo-control">
+                    <h4 class="control-subtitle">Servo Control (Arrows)</h4>
+                    <div class="dpad-container">
+                        <button class="dpad-btn dpad-up" data-command="UP" data-joystick="arrows" title="Servo Up (↑)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 15l-6-6-6 6"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-left" data-command="LEFT" data-joystick="arrows" title="Servo Left (←)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-stop" data-command="CENTER" data-joystick="arrows" title="Servo Center (Space)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-right" data-command="RIGHT" data-joystick="arrows" title="Servo Right (→)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                        <button class="dpad-btn dpad-down" data-command="DOWN" data-joystick="arrows" title="Servo Down (↓)">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: Drive Mode and Command Center -->
+    <div class="row-2-container">
+        <!-- Drive Mode Card -->
+        <div class="card drive-mode-card">
+            <h3 class="card-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                Drive Mode
+            </h3>
+
+            <div class="drive-mode-container">
+                <div class="mode-description">
+                    <div class="mode-info">
+                        <h4 id="currentModeTitle">Hold-to-Move Mode</h4>
+                        <p id="currentModeDesc">Vehicle stops when button is released</p>
+                    </div>
+                    <div class="mode-indicator">
+                        <div class="mode-status" id="modeStatus">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                            <span id="modeText">Hold Mode</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="mode-toggle-btn" id="modeToggle" title="Toggle Drive Mode (M)">
+                    <div class="toggle-icon" id="toggleIcon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <path d="M9 9h6v6H9z"/>
+                        </svg>
+                    </div>
+                    <span>Toggle Mode</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Command Center -->
+        <div class="card command-center-card">
+            <h3 class="card-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/>
+                </svg>
+                Command Center
+            </h3>
+            <div class="div">
+    <!-- Distance Sensor Section -->
+                <div class="sensor-section">
+                    <div class="sensor-display">
+                        <div class="distance-reading">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/>
+                                <path d="M18 2v3"/>
+                                <path d="M22 2v3"/>
+                                <path d="M2 2v3"/>
+                                <path d="M6 2v3"/>
+                            </svg>
+                            <div class="distance-info">
+                                <span class="distance-label">Distance</span>
+                                <span class="distance-value" id="distanceValue">-- cm</span>
+                            </div>
+                        </div>
+                        <div class="proximity-indicator">
+                            <div class="proximity-bar">
+                                <div class="proximity-fill" id="proximityFill"></div>
+                            </div>
+                            <div class="proximity-status" id="proximityStatus">
+                                <svg class="proximity-icon" id="proximityIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 12h8"/>
+                                </svg>
+                                <span id="proximityText">Safe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motor Status Section -->
+                <div class="motor-section">
+                    <h4>Motor Status</h4>
+                    <div class="motor-grid">
+                        <div class="motor-indicator">
+                            <span class="motor-label">Motor 1</span>
+                            <div class="motor-bar">
+                                <div class="motor-fill" id="motor1Fill"></div>
+                            </div>
+                            <span class="motor-value" id="motor1Value">0%</span>
+                        </div>
+                        <div class="motor-indicator">
+                            <span class="motor-label">Motor 2</span>
+                            <div class="motor-bar">
+                                <div class="motor-fill" id="motor2Fill"></div>
+                            </div>
+                            <span class="motor-value" id="motor2Value">0%</span>
+                        </div>
+                        <div class="motor-indicator">
+                            <span class="motor-label">Motor 3</span>
+                            <div class="motor-bar">
+                                <div class="motor-fill" id="motor3Fill"></div>
+                            </div>
+                            <span class="motor-value" id="motor3Value">0%</span>
+                        </div>
+                        <div class="motor-indicator">
+                            <span class="motor-label">Motor 4</span>
+                            <div class="motor-bar">
+                                <div class="motor-fill" id="motor4Fill"></div>
+                            </div>
+                            <span class="motor-value" id="motor4Value">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-grid">
+                    <button class="command-btn cmd-horn" data-command="HORN" title="Horn (H)">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 5a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2Z"/>
+                            <path d="M15.5 9a5 5 0 0 1 0 6"/>
+                            <path d="M18.5 7a9 9 0 0 1 0 10"/>
+                        </svg>
+                        <span>Horn</span>
+                        <small>(H)</small>
+                    </button>
+                    
+                    <button class="command-btn cmd-lights" data-command="LIGHTS" title="Lights (L)">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2"/>
+                            <path d="M12 20v2"/>
+                            <path d="M4.93 4.93l1.41 1.41"/>
+                            <path d="M17.66 17.66l1.41 1.41"/>
+                            <path d="M2 12h2"/>
+                            <path d="M20 12h2"/>
+                            <path d="M6.34 17.66l-1.41 1.41"/>
+                            <path d="M19.07 4.93l-1.41 1.41"/>
+                        </svg>
+                        <span>Lights</span>
+                        <small>(L)</small>
+                    </button>
+                    
+                    <button class="command-btn cmd-servo" data-command="SERVO" title="Open Servo (O)">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <path d="M9 9h6v6H9z"/>
+                        </svg>
+                        <span>Servo</span>
+                        <small>(O)</small>
+                    </button>
+                    
+                    <button class="command-btn cmd-auto" data-command="AUTO" title="Auto Mode (A)">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6"/>
+                            <path d="m21 12-6-6-6 6 6 6 6-6"/>
+                        </svg>
+                        <span>Auto</span>
+                        <small>(A)</small>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+
+            <!-- Help Page -->
+            <div id="help-page" class="page">
+                <div class="container">
+                    <header class="page-header">
+                        <h1>Tips & How to Use</h1>
+                        <p>Learn how to use the RC car controller effectively</p>
+                    </header>
+
+                    <div class="help-grid">
+                        <!-- Tips Section -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                                Usage Tips
+                            </h3>
+
+                            <div class="tips-list">
+                                <div class="tip-item">
+                                    <div class="tip-icon">🔗</div>
+                                    <div class="tip-content">
+                                        <h4>Connection</h4>
+                                        <p>Always ensure your device is in pairing mode before connecting. For Bluetooth, make sure the device is discoverable.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tip-item">
+                                    <div class="tip-icon">🎮</div>
+                                    <div class="tip-content">
+                                        <h4>Dual Controls</h4>
+                                        <p>Use WASD for primary movement and arrow keys for servo control. Both controls can be used simultaneously.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tip-item">
+                                    <div class="tip-icon">⚡</div>
+                                    <div class="tip-content">
+                                        <h4>Drive Modes</h4>
+                                        <p>Toggle between Hold-to-Move (stops when released) and Toggle-to-Move (continues until toggled off) using the M key.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tip-item">
+                                    <div class="tip-icon">🔋</div>
+                                    <div class="tip-content">
+                                        <h4>Battery Management</h4>
+                                        <p>Monitor your device's battery level and motor status in real-time through the Command Center.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tip-item">
+                                    <div class="tip-icon">📱</div>
+                                    <div class="tip-content">
+                                        <h4>Mobile Usage</h4>
+                                        <p>On mobile devices, use touch controls. The interface is optimized for both desktop and mobile use.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Keyboard Controls Section -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                    <path d="M6 8h.01"/>
+                                    <path d="M10 8h.01"/>
+                                    <path d="M14 8h.01"/>
+                                </svg>
+                                Keyboard Controls
+                            </h3>
+
+                            <div class="key-mappings">
+                                <div class="key-category">
+                                    <h4>Primary Movement (WASD)</h4>
+                                    <div class="key-list">
+                                        <div class="key-item">
+                                            <span>Move Forward</span>
+                                            <span class="key-badge">W</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Turn Left</span>
+                                            <span class="key-badge">A</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Move Backward</span>
+                                            <span class="key-badge">S</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Turn Right</span>
+                                            <span class="key-badge">D</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="key-category">
+                                    <h4>Servo Controls (Arrows)</h4>
+                                    <div class="key-list">
+                                        <div class="key-item">
+                                            <span>Servo Up</span>
+                                            <span class="key-badge">↑</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Servo Left</span>
+                                            <span class="key-badge">←</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Servo Down</span>
+                                            <span class="key-badge">↓</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Servo Right</span>
+                                            <span class="key-badge">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="key-category">
+                                    <h4>Special Commands</h4>
+                                    <div class="key-list">
+                                        <div class="key-item">
+                                            <span>Servo Center</span>
+                                            <span class="key-badge">SPACE</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Toggle Drive Mode</span>
+                                            <span class="key-badge">M</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Horn</span>
+                                            <span class="key-badge">H</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Lights Toggle</span>
+                                            <span class="key-badge">L</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Open Servo</span>
+                                            <span class="key-badge">O</span>
+                                        </div>
+                                        <div class="key-item">
+                                            <span>Auto Mode</span>
+                                            <span class="key-badge">Ctrl+A</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settings-page" class="page">
+                <div class="container">
+                    <header class="page-header">
+                        <h1>Settings</h1>
+                        <p>Customize your RC car controller experience</p>
+                    </header>
+
+                    <div class="settings-grid">
+                        <!-- Appearance Settings -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <path d="M12 2v2"/>
+                                    <path d="M12 20v2"/>
+                                    <path d="M4.93 4.93l1.41 1.41"/>
+                                    <path d="M17.66 17.66l1.41 1.41"/>
+                                    <path d="M2 12h2"/>
+                                    <path d="M20 12h2"/>
+                                    <path d="M6.34 17.66l-1.41 1.41"/>
+                                    <path d="M19.07 4.93l-1.41 1.41"/>
+                                </svg>
+                                Appearance
+                            </h3>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Dark Mode</h4>
+                                    <p>Toggle between light and dark themes</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="darkModeToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Theme Color</h4>
+                                    <p>Choose your preferred accent color</p>
+                                </div>
+                                <select id="themeColor" class="form-select">
+                                    <option value="cyan">Cyan (Default)</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="green">Green</option>
+                                    <option value="purple">Purple</option>
+                                    <option value="red">Red</option>
+                                    <option value="orange">Orange</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Device Settings -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                    <path d="M6 8h.01"/>
+                                    <path d="M10 8h.01"/>
+                                    <path d="M14 8h.01"/>
+                                </svg>
+                                Device Configuration
+                            </h3>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Custom Device Name</h4>
+                                    <p>Set a custom name for your RC car</p>
+                                </div>
+                                <input type="text" id="deviceName" placeholder="My RC Car" class="form-input">
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Auto-Reconnect</h4>
+                                    <p>Automatically reconnect to last device</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="autoReconnect" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Command Delay (ms)</h4>
+                                    <p>Delay between commands to prevent spam</p>
+                                </div>
+                                <input type="range" id="commandDelay" min="0" max="500" value="100" class="form-range">
+                                <span id="delayValue">100ms</span>
+                            </div>
+                        </div>
+
+                        <!-- Control Settings -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="6" x2="10" y1="12" y2="12"/>
+                                    <line x1="8" x2="8" y1="10" y2="14"/>
+                                    <line x1="15" x2="15.01" y1="13" y2="13"/>
+                                    <line x1="18" x2="18.01" y1="11" y2="11"/>
+                                    <rect width="20" height="12" x="2" y="6" rx="2"/>
+                                </svg>
+                                Control Options
+                            </h3>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Vibration Feedback</h4>
+                                    <p>Haptic feedback on mobile devices</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="vibrationFeedback" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Sound Effects</h4>
+                                    <p>Audio feedback for button presses</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="soundEffects">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Joystick Sensitivity</h4>
+                                    <p>Adjust control sensitivity</p>
+                                </div>
+                                <select id="sensitivity" class="form-select">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Data Management -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 7v1a3 3 0 0 0 3 3h1m0-4v1a3 3 0 0 0 3 3h1M4 7V4a1 1 0 0 1 1-1h3M4 7H1"/>
+                                    <path d="M14 7v1a3 3 0 0 1-3 3h-1m4-4V4a1 1 0 0 0-1-1h-3m4 4h3"/>
+                                </svg>
+                                Data & Privacy
+                            </h3>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Save Connection History</h4>
+                                    <p>Remember previously connected devices</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="saveHistory" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-actions">
+                                <button id="clearHistory" class="btn btn-secondary">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 6h18"/>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                    </svg>
+                                    Clear Device History
+                                </button>
+                                <button id="exportSettings" class="btn btn-secondary">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" x2="12" y1="15" y2="3"/>
+                                    </svg>
+                                    Export Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
